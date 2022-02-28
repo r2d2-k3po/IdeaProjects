@@ -1,7 +1,6 @@
 package org.zerock.guestbook.entity;
 
 import lombok.*;
-import org.springframework.web.bind.annotation.GetMapping;
 
 import javax.persistence.*;
 
