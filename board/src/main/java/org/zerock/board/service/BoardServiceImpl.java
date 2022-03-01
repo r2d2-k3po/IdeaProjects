@@ -6,6 +6,7 @@ import lombok.extern.log4j.Log4j2;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.zerock.board.dto.BoardDTO;
 import org.zerock.board.dto.PageRequestDTO;
 import org.zerock.board.dto.PageResultDTO;
@@ -57,38 +58,38 @@ public class BoardServiceImpl implements BoardService{
 
         return new PageResultDTO<>(result, fn);
     }
-//
-//    @Override
-//    public BoardDTO get(Long bno) {
-//
-//        Object result = repository.getBoardByBno(bno);
-//
-//        Object[] arr = (Object[])result;
-//
-//        return entityToDTO((Board)arr[0], (Member)arr[1], (Long)arr[2]);
-//    }
-//
-//    @Transactional
-//    @Override
-//    public void removeWithReplies(Long bno) {
-//
-//        //댓글 부터 삭제
-//        replyRepository.deleteByBno(bno);
-//
-//        repository.deleteById(bno);
-//
-//    }
-//
-//    @Transactional
-//    @Override
-//    public void modify(BoardDTO boardDTO) {
-//
-//        Board board = repository.getOne(boardDTO.getBno());
-//
-//
-//        board.changeTitle(boardDTO.getTitle());
-//        board.changeContent(boardDTO.getContent());
-//
-//        repository.save(board);
-//    }
+
+    @Override
+    public BoardDTO get(Long bno) {
+
+        Object result = repository.getBoardByBno(bno);
+
+        Object[] arr = (Object[])result;
+
+        return entityToDTO((Board)arr[0], (Member)arr[1], (Long)arr[2]);
+    }
+
+    @Transactional
+    @Override
+    public void removeWithReplies(Long bno) {
+
+        //댓글 부터 삭제
+        replyRepository.deleteByBno(bno);
+
+        repository.deleteById(bno);
+
+    }
+
+    @Transactional
+    @Override
+    public void modify(BoardDTO boardDTO) {
+
+        Board board = repository.getById(boardDTO.getBno());
+
+
+        board.changeTitle(boardDTO.getTitle());
+        board.changeContent(boardDTO.getContent());
+
+        repository.save(board);
+    }
 }
