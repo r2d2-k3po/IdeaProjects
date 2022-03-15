@@ -15,8 +15,8 @@ public class MemberRepositoryTests {
     @Autowired
     private MemberRepository memberRepository;
 
-//    @Autowired
-//    private ReviewRepository reviewRepository;
+    @Autowired
+    private ReviewRepository reviewRepository;
 
 
     @Test
@@ -31,23 +31,23 @@ public class MemberRepositoryTests {
         });
     }
 
-//    @Commit
-//    @Transactional
-//    @Test
-//    public void testDeleteMember() {
+    @Commit
+    @Transactional
+    @Test
+    public void testDeleteMember() {
 
         Long mid = 1L; //Member의 mid
 
         Member member = Member.builder().mid(mid).build();
 
-        //기존
-        //memberRepository.deleteById(mid);
-        //reviewRepository.deleteByMember(member);
-
-        //순서 주의
-//        reviewRepository.deleteByMember(member);
+//        기존
 //        memberRepository.deleteById(mid);
-//    }
+//        reviewRepository.deleteByMember(member);
+//
+//        순서 주의
+        reviewRepository.deleteByMember(member);
+        memberRepository.deleteById(mid);
+    }
 
 
 }
